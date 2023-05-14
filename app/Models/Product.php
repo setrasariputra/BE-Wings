@@ -22,10 +22,12 @@ class Product extends Model
     {
         $output = array();
 
-        $products = Product::select('id','product_code','product_name','dimension','unit','currency','price','discount')->orderBy('product_name', 'ASC')->get();
+        $products = Product::select('id','product_code','product_name','dimension','unit','currency','price','discount')->orderBy('id', 'DESC')->get();
         if(!empty($products)) {
             foreach($products as $val => $key) {
                 $sales_price = $this->SalesPrice($key->price, $key->discount);
+                $product_image_model = new Product_image();
+                $image = $product_image_model->ProductImage($key->id);
                 $output[] = array(
                     'id' => $key->id,
                     'product_code' => $key->product_code,
@@ -38,6 +40,8 @@ class Product extends Model
                     'discount' => $key->discount,
                     'sales_price' => $sales_price,
                     'display_sales_price' => 'Rp. '.number_format($sales_price),
+                    'choose' => false,
+                    'image' => $image
                 );
             }
         }

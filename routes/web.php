@@ -24,7 +24,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->get('/v1/logout', 'AuthController@Logout');
+        // products
         $router->get('/v1/products', 'ProductController@Read');
+        $router->post('/v1/product/store', 'ProductController@Store');
+        $router->post('/v1/product/update', 'ProductController@Update');
+        $router->get('/v1/product/delete/{id}', 'ProductController@Delete');
+        $router->post('/v1/product/image/store/{id}', 'ProductController@StoreImage');
+
+        // transactions
         $router->get('/v1/transaction', 'TransactionController@Read');
         $router->post('/v1/transaction/checkout', 'TransactionController@Checkout');
     });

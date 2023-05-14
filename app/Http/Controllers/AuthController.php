@@ -25,10 +25,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user_data = User::select('id','user')->where('user', $validated['user'])->first();
+        $user_data = User::select('id', 'user')->where('user', $validated['user'])->first();
         if (empty($user_data)) {
             return response()->json(['status' => 'error', 'message' => 'User not found ']);
-        }        
+        }
 
         $credentials = request(['user', 'password']);
         $refresh_token = auth()->setTTL(env('JWT_REFRESH_TTL'))->tokenById($user_data['id']);
@@ -52,7 +52,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['status' => 'success', 'message' => 'Successfully logged out']);
     }
 
     public function refresh()
@@ -64,10 +64,10 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'access_token' => $token,
-            'refresh_token' => $refresh_token,  
-            'auth' => $auth,          
+            'refresh_token' => $refresh_token,
+            'auth' => $auth,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL(),            
+            'expires_in' => auth()->factory()->getTTL(),
         ]);
     }
 }
