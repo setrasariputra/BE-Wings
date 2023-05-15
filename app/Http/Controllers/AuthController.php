@@ -21,8 +21,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validated = $this->validate($request, [
-            'user' => 'required',
-            'password' => 'required',
+            'user' => 'required|max:30',
+            'password' => 'required|max:255',
         ]);
 
         $user_data = User::select('id', 'user')->where('user', $validated['user'])->first();
