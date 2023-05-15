@@ -56,6 +56,9 @@ class ProductController extends Controller
                     }
                     if (!empty($request->discount)) {
                         $insert->discount = $request->discount;
+                    }else
+                    if (empty($request->discount)) {
+                        $insert->discount = NULL;
                     }
                     $insert->currency = 'IDR';
                     $insert->unit = 'PCS';
@@ -109,6 +112,9 @@ class ProductController extends Controller
                     }
                     if (!empty($request->discount)) {
                         $update->discount = $request->discount;
+                    }else
+                    if (empty($request->discount)) {
+                        $update->discount = NULL;
                     }
                     $update->currency = 'IDR';
                     $update->unit = 'PCS';
